@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-export default function SignUpForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export default function SignUpForm({ setToken }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   async function handleSubmit(event) {
     event.preventDefault();
     try {
         const response = await fetch('https://fsa-jwt-practice.herokuapp.com/signup', {
-            method: "POST",
+            method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       }
 
       const result = await response.json();
-      console.log("Success:", result);
+      setToken(result.token);
+      console.log('Success:', result);
     } catch (error) {
       setError(error.message);
     }
@@ -29,12 +30,12 @@ export default function SignUpForm() {
   return (
     <>
       <h2>Sign Up</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Username:
           <input
-            type="text"
+            type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -42,12 +43,12 @@ export default function SignUpForm() {
         <label>
           Password:
           <input
-            type="password"
+            type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type='submit'>Submit</button>
       </form>
     </>
   );
