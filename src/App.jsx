@@ -1,11 +1,13 @@
+import React from 'react';
 import './App.css';
+import Authenticate from './components/Authenticate';
+import SignUpForm from './components/SignUpForm';
 
-function App() {
+export default function App() {
   return (
-    <div>
-      {/* Blank Application */}
-    </div>
+    <>
+      <Authenticate />
+      <SignUpForm />
+    </>
   );
 }
-
-export default App;
