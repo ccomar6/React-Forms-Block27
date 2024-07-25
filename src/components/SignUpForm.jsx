@@ -4,8 +4,19 @@ export default function SignUpForm({ setToken }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [validationMessage, setValidationMessage] = useState('');
+
   async function handleSubmit(event) {
     event.preventDefault();
+
+    // Form validation
+    if (username.length < 8) {
+        setValidationMessage('Username must be at least 8 characters long.');
+        return;
+      } else {
+        setValidationMessage('');
+      }
+
     try {
         const response = await fetch('https://fsa-jwt-practice.herokuapp.com/signup', {
             method: 'POST',
@@ -30,8 +41,9 @@ export default function SignUpForm({ setToken }) {
   return (
     <>
       <h2>Sign Up</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      {error && <p className="error">{error}</p>}
+      {validationMessage && <p className="error">{validationMessage}</p>}     
+       <form onSubmit={handleSubmit}>
         <label>
           Username:
           <input
